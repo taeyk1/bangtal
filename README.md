@@ -17,3 +17,7 @@
 
 ## 퍼즐
 3x3퍼즐을 이동시켜 그림을 완성시키는 퍼즐게임
+
+## 개인과제 문제적탈출
+
+![문제적탈출](https://github.com/taeyk1/bangtal/blob/master/images(%EB%B0%A9%ED%83%88%EC%B6%9C)/3.png)
