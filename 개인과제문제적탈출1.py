@@ -198,7 +198,7 @@ def box_onKeypad():
 box.onKeypad = box_onKeypad
 
 def problem3_onMouseAction(x, y, action):
-    showMessage('한자와 관련된 것 같아')
+    showMessage('밭...전...?')
 problem3.onMouseAction = problem3_onMouseAction
 
 door4.locked = True
@@ -206,7 +206,6 @@ def door4_onMouseAction(x, y, action):
     if door4.locked:
         showMessage('문이 잠겼습니다.')
     else:
-        print("걸린시간 :", time.time() - start)
         endGame()
 door4.onMouseAction = door4_onMouseAction
 
@@ -216,6 +215,7 @@ keypad4.onMouseAction = keypad4_onMouseAction
 
 def door4_onKeypad():
     door4.locked = False
+    print("걸린시간 :", time.time() - start)
     showMessage('수고하셨습니다! 걸린시간을 확인하세요.')
 door4.onKeypad = door4_onKeypad
 
@@ -231,4 +231,5 @@ def problem5_onMouseAction(x, y, action):
     showMessage('복잡하군...')
 problem5.onMouseAction = problem5_onMouseAction
 
-startGame(scene5)
+startGame(scene1)
+
