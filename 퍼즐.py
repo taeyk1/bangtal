@@ -1,7 +1,11 @@
 from bangtal import*
+import random
+import time
 
 setGameOption(GameOption.INVENTORY_BUTTON, False)
 setGameOption(GameOption.MESSAGE_BOX_BUTTON, False) 
+
+start = time.time()
 
 scene1 = Scene('퍼즐게임','images/원본.jpg')
 
@@ -11,47 +15,86 @@ startbutton.show()
 
 scene2 = Scene('퍼즐게임','images/배경.png')
 
-#왼쪽 166 위 462 사진크기 가로229 세로 123
-puzzle1 = Object('images/1.jpg')
-puzzle1.locate(scene2, 0, 565)
-puzzle1.show()
-
-puzzle2 = Object('images/2.jpg')
-puzzle2.locate(scene2, 425, 565)
-puzzle2.show()
-
-puzzle3 = Object('images/3.jpg')
-puzzle3.locate(scene2, 850, 565)
-puzzle3.show()
-
-puzzle4 = Object('images/4.jpg')
-puzzle4.locate(scene2, 0, 285)
-puzzle4.show()
-
-puzzle5 = Object('images/5.jpg')
-puzzle5.locate(scene2, 425, 285)
-puzzle5.show()
-
-puzzle6 = Object('images/6.jpg')
-puzzle6.locate(scene2, 850, 285)
-puzzle6.show()
-
-puzzle7 = Object('images/7.jpg')
-puzzle7.locate(scene2, 0, 0)
-puzzle7.show()
-
-puzzle8 = Object('images/8.jpg')
-puzzle8.locate(scene2, 425, 0)
-puzzle8.show()
-
-puzzle9 = Object('images/9.jpg')
-puzzle9.locate(scene2, 850, 0)
-puzzle9.show()
-
-
 def startbutton_onMouseAction(x, y, action):
     scene2.enter()
-    showMessage('3x3퍼즐입니다. 맞추어 보세요!')
+    showMessage('퍼즐을 풀어보세요!')
 startbutton.onMouseAction =startbutton_onMouseAction
+
+def find_index(object):
+    for index in range(9):
+        if game_board[index] == object: return index
+
+def movable(index):
+    if index < 0: return False
+    if index > 8: return False
+    if index % 3 > 0 and index - 1 == blank: return True  # 이동 : 왼쪽 오른쪽 아래 위
+    if index % 3 < 2 and index + 1 == blank: return True
+    if index > 2 and index - 3 == blank: return True
+    if index < 6  and index + 3 == blank: return True
+    return False
+
+def move(index):
+    global blank
+    game_board[index].locate(scene2, 425 * (blank % 3), 560 - 280 * (blank // 3))
+    game_board[blank].locate(scene2, 425 * (index % 3), 560 - 280 * (index // 3))
+
+    game_board[index], game_board[blank] = game_board[blank], game_board[index]
+    #object = game_board[index]
+    #game_board[index] = game_board[blank]
+    #game_board[blank] = object
+
+    blank = index
+
+def completed():
+    for index in range(8):
+        if game_board[index] != init_board[index]: return False
+    return True
     
+delta = [-1, 1, -3, 3]
+def random_move():
+    while True:
+        index = blank + delta[random.randrange(4)]
+        if movable(index): break
+    move(index)
+   
+
+def onMouseAction_piece(object, x, y, action):
+    index = find_index(object)
+    if movable(index):
+        move(index)
+
+    if completed():
+        print("걸린시간 :", time.time() - start)
+        showMessage('성공!')
+
+Object.onMouseActionDefault = onMouseAction_piece
+
+game_board = []
+init_board = []
+for index in range(9): # 0~9 피스
+    piece = Object("images/" +  str(index + 1) + ".jpg")
+    piece.locate(scene2, 0 + 425 * (index % 3), 560 - 280 * (index // 3)) # 위치
+    piece.show()
+    
+    game_board.append(piece)
+    init_board.append(piece)
+
+
+blank = 8
+game_board[blank].hide()
+
+count = 16
+timer = Timer(1)
+def onTimeout():
+    random_move()
+
+    global count
+    count = count -1
+    if count > 0:
+        timer.set(0.1)
+        timer.start()
+timer.onTimeout = onTimeout
+
+timer.start()
+
 startGame(scene1)
