@@ -123,7 +123,7 @@ def door1_onMouseAction(x, y, action):
 door1.onMouseAction = door1_onMouseAction
 
 def text_onMouseAction(x, y, action):
-    showMessage('제작자의 성의를 생각하여 답을 찍지말아주세요ㅠㅠ')
+    showMessage('제작자의 성의를 생각하여 답을 찍지 말아주세요ㅠㅠ')
 text.onMouseAction = text_onMouseAction
 
 def door1_onKeypad():
@@ -159,7 +159,7 @@ def door2_onKeypad():
 door2.onKeypad = door2_onKeypad
 
 def problem2_onMouseAction(x, y, action):
-    showMessage('12345')
+    showMessage('순서와 관련있는 것 같아')
 problem2.onMouseAction = problem2_onMouseAction
 
 door3.closed= True
