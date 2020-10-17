@@ -22,5 +22,3 @@
 * 문제를 풀고 방을 탈출하여 문제해결능력을 테스트 해보시길 바랍니다.
 
 * 최대한 답을 찍지 마시고 풀어주시길 바랍니다.
-
-![문제적탈출](https://github.com/taeyk1/bangtal/blob/master/images(%EA%B0%9C%EC%9D%B8%EA%B3%BC%EC%A0%9C%EB%AC%B8%EC%A0%9C%EC%A0%81%ED%83%88%EC%B6%9C)/%ED%99%94%EB%A9%B4.png)
